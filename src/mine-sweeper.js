@@ -23,9 +23,55 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  let matrix2 = [];
+  let count = 0;
+  for (let i = 0; i < matrix.length; i++) {
+      matrix2[i] = [];
+      for (let j = 0; j < matrix[i].length; j++) {
+          if (i === 0) {
+              matrix[i + 1][j] ? ++count : 0;
+              if (j >= 0) {
+                  matrix[i][j + 1] ? ++count : 0;
+                  matrix[i + 1][j + 1] ? ++count : 0;
+              }
+              if (j <= matrix[i].length - 1) {
+                  matrix[i][j - 1] ? ++count : 0;
+                  matrix[i + 1][j - 1] ? ++count : 0;
+              }
+              matrix2[i][j] = count;
+              count = 0;
+          } else if (i === matrix.length - 1) {
+              matrix[i - 1][j] ? ++count : 0;
+              if (j >= 0) {
+                  matrix[i][j + 1] ? ++count : 0;
+                  matrix[i - 1][j + 1] ? ++count : 0;
+              }
+              if (j <= matrix[i].length - 1) {
+                  matrix[i][j - 1] ? ++count : 0;
+                  matrix[i - 1][j - 1] ? ++count : 0;
+              }
+              matrix2[i][j] = count;
+              count = 0;
+          } else {
+              matrix[i - 1][j] === true ? ++count : 0;
+              matrix[i + 1][j] === true ? ++count : 0;
+              if (j >= 0) {
+                  matrix[i][j + 1] === true ? ++count : 0;
+                  matrix[i - 1][j + 1] === true ? ++count : 0;
+                  matrix[i + 1][j + 1] === true ? ++count : 0;
+              }
+              if (j <= matrix[i].length - 1) {
+                  matrix[i][j - 1] === true ? ++count : 0;
+                  matrix[i - 1][j - 1] === true ? ++count : 0;
+                  matrix[i + 1][j - 1] === true ? ++count : 0;
+              }
+              matrix2[i][j] = count;
+              count = 0;
+          }
+      }
+  }
+  return matrix2;
 }
 
 module.exports = {
